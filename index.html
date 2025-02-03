@@ -10,10 +10,41 @@
 <body>
 
 <style>
-body {
-  background: url('images/gun.jpg') no-repeat;
-  background-size: cover;
-}
+    /* Welcome Choice Modal Styles */
+    .choice-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+    .choice-box {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+    }
+
+    /* Valentine's Page Styles */
+    .container {
+        display: none;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+
+    body {
+        background: url('images/gun.jpg') no-repeat;
+        background-size: cover;
+    }
+
     h2 {
         text-align: center;
         font-size: 45px;
@@ -27,7 +58,7 @@ body {
     }
 
     .header {
-      font-size: 25px;
+        font-size: 25px;
         background-color: lightpink;
         color:deeppink;
         text-shadow: 2px 1px 2px darkred;
@@ -38,7 +69,7 @@ body {
 
     .btn-primary {
         display: flex;
-        justify-content: center;   
+        justify-content: center;
         text-shadow: 2px 2px black;
         box-shadow: 2px 3px 3px black;
         border: 1px solid black;
@@ -62,16 +93,15 @@ body {
         margin: 0 auto;
         width: 50%;
     }
-    
+
     .card-text{
-      font-size: 15px;
-      font-weight: bold;
-      color: white;
-      text-shadow: 2px 2px 2px black;
-      
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 2px black;
     }
-    
 </style>
+
 <style>
     /* Custom Styles for Modals */
     .modal-content {
@@ -106,7 +136,6 @@ body {
         border-radius: 50%;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     }
-    
 
     /* Modal Button Styling */
     .modal-footer button {
@@ -138,6 +167,14 @@ body {
         100% { transform: scale(1.2); }
     }
 </style>
+
+<div class="choice-modal" id="choiceModal">
+    <div class="choice-box">
+      <h3>Welcome! What would you like to do?</h3>
+      <button type="button" class="btn btn-success w-100" onclick="enterValentinesPage()">Enter Valentine's Page</button>
+      <button type="button" class="btn btn-danger w-100 mt-3" onclick="exitPage()">Exit</button>
+    </div>
+</div>
 
 <!-- Valentine Response Modal -->
 <div class="modal fade" id="responseModal" tabindex="-1" aria-hidden="true">
@@ -177,11 +214,10 @@ body {
     </div>
 </div>
 
-
-<div class="container mt-3">
+<div class="container mt-3" id="valentineContent">
     <h2>HAPPY VALENTINE'S TO YOU</h2>
 
-    <div class="mt-4 p-5  rounded text-center header">
+    <div class="mt-4 p-5 rounded text-center header">
         <h1>WILL YOU BE MY VALENTINE? 💖</h1>
         <p>
             Every moment with you is a treasure, every smile of yours brightens my world.  
@@ -227,95 +263,50 @@ body {
         </div>
     </div>
 
-    <!-- Valentine Question Box -->
 
-<!-- Accessory Selection Modal -->
-<div class="modal fade" id="accessoryModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Accessory Message 💍</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <span class="heart-icon">🎁</span>
-                <p id="accessoryMessage"></p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+    <!-- Accessories Cards -->
+    <div class="row mt-5 mb-5">
+        <!-- Ring Card -->
+        <div class="col-sm-4 d-flex justify-content-center">
+            <div class="card shadow-lg p-3 mb-5 bg-secondary rounded border-3 border-dark" style="width:400px">
+                <img class="card-img-top" src="images/ring.jpeg" style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title"> Ring</h4>
+                    <p class="card-text">A symbol of everlasting love.</p>
+                    <button class="btn btn-primary" onclick="showAccessoryMessage('ring')">Choose This Gift</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Accessories Cards -->
-<div class="row mt-5 mb-5">
-    <!-- Ring Card -->
-    <div class="col-sm-4 d-flex justify-content-center">
-        <div class="card shadow-lg p-3 mb-5 bg-secondary rounded border-3 border-dark" style="width:400px">
-            <img class="card-img-top" src="images/ring.jpeg" style="width:100%">
-            <div class="card-body">
-                <h4 class="card-title"> Ring</h4>
-                <p class="card-text">A symbol of everlasting love.</p>
-                <button class="btn btn-primary" onclick="showAccessoryMessage('ring')">Choose This Gift</button>
+        <!-- Necklace Card -->
+        <div class="col-sm-4 d-flex justify-content-center">
+            <div class="card shadow-lg p-3 mb-5 bg-info rounded border-3 border-dark" style="width:400px">
+                <img class="card-img-top" src="images/necklace.jpeg" style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title"> Necklace</h4>
+                    <p class="card-text">Timeless beauty and elegance.</p>
+                    <button class="btn btn-primary" onclick="showAccessoryMessage('necklace')">Choose This Gift</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Necklace Card -->
-    <div class="col-sm-4 d-flex justify-content-center">
-        <div class="card shadow-lg p-3 mb-5 bg-info rounded border-3 border-dark" style="width:400px">
-            <img class="card-img-top" src="images/necklace.jpeg" style="width:100%">
-            <div class="card-body">
-                <h4 class="card-title"> Necklace</h4>
-                <p class="card-text">Timeless beauty and elegance.</p>
-                <button class="btn btn-primary" onclick="showAccessoryMessage('necklace')">Choose This Gift</button>
+        <!-- Bracelet Card -->
+        <div class="col-sm-4 d-flex justify-content-center">
+            <div class="card shadow-lg p-3 mb-5 bg-light rounded border-3 border-dark" style="width:400px">
+                <img class="card-img-top" src="images/bracelet.jpeg" style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title"> Bracelet</h4>
+                    <p class="card-text">A reminder of love and memories.</p>
+                    <button class="btn btn-primary" onclick="showAccessoryMessage('bracelet')">Choose This Gift</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Bracelet Card -->
-    <div class="col-sm-4 d-flex justify-content-center">
-        <div class="card shadow-lg p-3 mb-5 bg-light rounded border-3 border-dark" style="width:400px">
-            <img class="card-img-top" src="images/bracelet.jpeg" style="width:100%">
-            <div class="card-body">
-                <h4 class="card-title"> Bracelet</h4>
-                <p class="card-text">A reminder of love and memories.</p>
-                <button class="btn btn-primary" onclick="showAccessoryMessage('bracelet')">Choose This Gift</button>
-            </div>
-        </div>
-    </div>
-</div>
+            <!-- Valentine Question Box -->
     <div class="valentine-box mt-5">
-        <h2>SO WHAT DO YOU SAY?</h2>
-        <button class="btn btn-success" onclick="showResponse('yes')">Yes</button>
-        <button class="btn btn-danger" onclick="showResponse('no')">No</button>
+      <h2>SO WHAT DO YOU SAY?</h2>
+      <button class="btn btn-success" onclick="showResponse('yes')">Yes</button>
+      <button class="btn btn-danger" onclick="showResponse('no')">No</button>
     </div>
-</div>
-
-<!-- Valentine Response Modal -->
-<div class="modal fade" id="responseModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Your Response</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="responseMessage"></div>
-        </div>
-    </div>
-</div>
-
-<!-- Flower Selection Modal -->
-<div class="modal fade" id="flowerModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Flower Message</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="flowerMessage"></div>
-        </div>
     </div>
 </div>
 
@@ -341,6 +332,7 @@ body {
         }
         new bootstrap.Modal(document.getElementById("flowerModal")).show();
     }
+
     function showAccessoryMessage(accessory) {
         const message = document.getElementById("accessoryMessage");
         if (accessory === 'ring') {
@@ -351,6 +343,17 @@ body {
             message.innerHTML = "🔗 A charm bracelet carries memories and love with every charm.";
         }
         new bootstrap.Modal(document.getElementById("accessoryModal")).show();
+    }
+
+    // Function to show the Valentine's content and hide the choice overlay
+    function enterValentinesPage() {
+      document.getElementById("valentineContent").style.display = "block"; // Show the Valentine's page
+      document.getElementById("choiceModal").style.display = "none"; // Hide the choice overlay
+    }
+
+    // Function to exit the page (redirect or close)
+    function exitPage() {
+     <div></div> window.location.href = "https://www.google.com";  // Example of redirecting elsewhere, can be changed
     }
 </script>
 
