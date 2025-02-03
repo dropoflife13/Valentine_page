@@ -196,6 +196,24 @@
         100% { transform: scale(1.2); }
     }
 </style>
+<!-- Confirmation Modal ---- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Your Choice</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmationMessage"></p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" id="cancelButton" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" onclick="proceedWithSelection()">Yes, Choose This</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Love Letter Modal -->
 <div class="modal fade" id="letterModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -315,7 +333,7 @@ You are my heart’s greatest joy and my forever Valentine. Every moment with yo
                 <div class="card-body">
                     <h4 class="card-title">Red Roses</h4>
                     <p class="card-text">Symbol of love and romance.</p>
-                    <button class="btn btn-primary" onclick="showFlowerMessage('rose')">Choose Your Flowers</button>
+                    <button class="btn btn-primary" onclick="confirmSelection('flower', 'rose')">Choose Your Flowers</button>
                 </div>
             </div>
         </div>
@@ -327,7 +345,7 @@ You are my heart’s greatest joy and my forever Valentine. Every moment with yo
                 <div class="card-body">
                     <h4 class="card-title">Tulips</h4>
                     <p class="card-text">Elegant and perfect for any occasion.</p>
-                    <button class="btn btn-primary" onclick="showFlowerMessage('tulip')">Choose Your Flowers</button>
+                    <button class="btn btn-primary" onclick="confirmSelection('flower', 'tulip')">Choose Your Flowers</button>
                 </div>
             </div>
         </div>
@@ -339,7 +357,7 @@ You are my heart’s greatest joy and my forever Valentine. Every moment with yo
                 <div class="card-body">
                     <h4 class="card-title">Sunflowers</h4>
                     <p class="card-text">Bright and full of happiness.</p>
-                    <button class="btn btn-primary" onclick="showFlowerMessage('sunflower')">Choose Your Flowers</button>
+                    <button class="btn btn-primary" onclick="confirmSelection('flower', 'sunflower')">Choose Your Flowers</button>
                 </div>
             </div>
         </div>
@@ -357,7 +375,7 @@ You are my heart’s greatest joy and my forever Valentine. Every moment with yo
                 <div class="card-body">
                     <h4 class="card-title"> Ring</h4>
                     <p class="card-text">A symbol of everlasting love.</p>
-                    <button class="btn btn-primary" onclick="showAccessoryMessage('ring')">Choose This Gift</button>
+                    <button class="btn btn-primary" onclick="confirmSelection('accessory', 'ring')">Choose This Gift</button>
                 </div>
             </div>
         </div>
@@ -369,7 +387,7 @@ You are my heart’s greatest joy and my forever Valentine. Every moment with yo
                 <div class="card-body">
                     <h4 class="card-title"> Necklace</h4>
                     <p class="card-text">Timeless beauty and elegance.</p>
-                    <button class="btn btn-primary" onclick="showAccessoryMessage('necklace')">Choose This Gift</button>
+                    <button class="btn btn-primary" onclick="confirmSelection('accessory', 'necklace')">Choose This Gift</button>
                 </div>
             </div>
         </div>
@@ -381,7 +399,7 @@ You are my heart’s greatest joy and my forever Valentine. Every moment with yo
                 <div class="card-body">
                     <h4 class="card-title"> Bracelet</h4>
                     <p class="card-text">A reminder of love and memories.</p>
-                    <button class="btn btn-primary" onclick="showAccessoryMessage('bracelet')">Choose This Gift</button>
+                    <button class="btn btn-primary" onclick="confirmSelection('accessory', 'bracelet')">Choose This Gift</button>
                 </div>
             </div>
         </div>
@@ -400,54 +418,127 @@ You are my heart’s greatest joy and my forever Valentine. Every moment with yo
 </div>
 
 <script>
-    function showResponse(answer) {
-        const message = document.getElementById("responseMessage");
-        if (answer === 'yes') {
-            message.innerHTML = "Yay! 💖 Let's make this Valentine's Day special!";
-        } else {
-            message.innerHTML = "Oh no! 😢 Maybe next time...";
-        }
-        new bootstrap.Modal(document.getElementById("responseModal")).show();
-    }
+let selectedItem = ''; // Stores selected flower or accessory
+let selectedType = ''; // Stores whether it's a flower or accessory
 
-    function showFlowerMessage(flower) {
-        const message = document.getElementById("flowerMessage");
-        if (flower === 'rose') {
-            message.innerHTML = "🌹 Good choice! Red roses symbolize deep love and passion.";
-        } else if (flower === 'tulip') {
-            message.innerHTML = "🌷 Beautiful! Tulips represent elegance and perfect love.";
-        } else if (flower === 'sunflower') {
-            message.innerHTML = "🌻 Lovely! Sunflowers bring joy and warmth like the sun itself.";
-        }
-        new bootstrap.Modal(document.getElementById("flowerModal")).show();
-    }
-    
+function confirmSelection(type, item) {
+    selectedItem = item;
+    selectedType = type;
+    document.getElementById("confirmationMessage").innerHTML = `Are you sure you want to pick ${item}?`;
 
-    function showAccessoryMessage(accessory) {
-        const message = document.getElementById("accessoryMessage");
-        if (accessory === 'ring') {
-            message.innerHTML = "💍 A diamond ring symbolizes commitment and eternal love.";
-        } else if (accessory === 'necklace') {
-            message.innerHTML = "📿 A gold necklace represents timeless beauty and elegance.";
-        } else if (accessory === 'bracelet') {
-            message.innerHTML = "🔗 A charm bracelet carries memories and love with every charm.";
-        }
-        new bootstrap.Modal(document.getElementById("accessoryModal")).show();
-    }
-
-    // Function to show the Valentine's content and hide the choice overlay
-    function enterValentinesPage() {
-      document.getElementById("valentineContent").style.display = "block"; // Show the Valentine's page
-      document.getElementById("choiceModal").style.display = "none"; // Hide the choice overlay
-    }
-
-    // Function to exit the page (redirect or close)
-    function exitPage() {
-      window.location.href = "https://www.google.com";  // Example of redirecting elsewhere, can be changed
-    }
-    function openLetter() {
-    new bootstrap.Modal(document.getElementById("letterModal")).show();
+    // Get or create the Bootstrap modal instance and show it
+    let confirmationModalEl = document.getElementById("confirmationModal");
+    let confirmationModal = new bootstrap.Modal(confirmationModalEl);
+    confirmationModal.show();
 }
+
+function proceedWithSelection() {
+    // Get the confirmation modal instance
+    let confirmationModalEl = document.getElementById("confirmationModal");
+    let confirmationModal = new bootstrap.Modal(confirmationModalEl);
+    
+    // Hide the confirmation modal properly
+    confirmationModal.hide();
+
+    // Ensure a smooth transition before opening the selected item's modal
+    setTimeout(() => {
+        if (selectedType === 'flower') {
+            showFlowerMessage(selectedItem);
+        } else if (selectedType === 'accessory') {
+            showAccessoryMessage(selectedItem);
+        }
+    }, 300); // Small delay for smooth modal transition
+}
+
+function showFlowerMessage(flower) {
+    const message = document.getElementById("flowerMessage");
+    if (flower === 'rose') {
+        message.innerHTML = "🌹 Good choice! Red roses symbolize deep love and passion.";
+    } else if (flower === 'tulip') {
+        message.innerHTML = "🌷 Beautiful! Tulips represent elegance and perfect love.";
+    } else if (flower === 'sunflower') {
+        message.innerHTML = "🌻 Lovely! Sunflowers bring joy and warmth like the sun itself.";
+    }
+
+    // Show the flower message modal
+    let flowerModalEl = document.getElementById("flowerModal");
+    let flowerModal = new bootstrap.Modal(flowerModalEl);
+    flowerModal.show();
+}
+
+function showAccessoryMessage(accessory) {
+    const message = document.getElementById("accessoryMessage");
+    if (accessory === 'ring') {
+        message.innerHTML = "💍 A diamond ring symbolizes commitment and eternal love.";
+    } else if (accessory === 'necklace') {
+        message.innerHTML = "📿 A gold necklace represents timeless beauty and elegance.";
+    } else if (accessory === 'bracelet') {
+        message.innerHTML = "🔗 A charm bracelet carries memories and love with every charm.";
+    }
+
+    // Show the accessory message modal
+    let accessoryModalEl = document.getElementById("accessoryModal");
+    let accessoryModal = new bootstrap.Modal(accessoryModalEl);
+    accessoryModal.show();
+}
+
+function showResponse(answer) {
+    const message = document.getElementById("responseMessage");
+    if (answer === 'yes') {
+        message.innerHTML = "Yay! 💖 Let's make this Valentine's Day special!";
+    } else {
+        message.innerHTML = "Oh no! 😢 Maybe next time...";
+    }
+
+    // Show response modal
+    let responseModalEl = document.getElementById("responseModal");
+    let responseModal = new bootstrap.Modal(responseModalEl);
+    responseModal.show();
+}
+
+function enterValentinesPage() {
+    document.getElementById("valentineContent").style.display = "block"; // Show Valentine's page
+    document.getElementById("choiceModal").style.display = "none"; // Hide choice overlay
+}
+
+function exitPage() {
+    window.location.href = "https://www.google.com"; // Redirect elsewhere (can be changed)
+}
+
+function openLetter() {
+    let letterModalEl = document.getElementById("letterModal");
+    let letterModal = new bootstrap.Modal(letterModalEl);
+    letterModal.show();
+}
+
+// Closing modal when pressing cancel or X button (for confirmation modal)
+document.querySelectorAll('.btn-close').forEach(button => {
+    button.addEventListener('click', function () {
+        let modal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+        if (modal) {
+            modal.hide(); // Properly hide the confirmation modal when the X or Cancel button is clicked
+        }
+    });
+});
+
+// Ensure that the modal closes properly when clicking on "Cancel"
+document.getElementById('cancelButton').addEventListener('click', function () {
+    let modal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+    if (modal) {
+        modal.hide(); // Close the confirmation modal on cancel button click
+    }
+});
+
+// Closing the flower or accessory message modals and then the confirmation modal
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('hidden.bs.modal', function () {
+        // Ensure that confirmation modal is properly closed if it was open
+        if (document.getElementById('confirmationModal')) {
+            let confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            confirmationModal.hide();
+        }
+    });
+});
 
 </script>
 
